@@ -1,0 +1,27 @@
+tables:
+- table: users
+custom_types:
+  objects:
+  - name: UserInfo
+    fields:
+    - name: userId
+      type: Int
+    relationships:
+    - remote_table: users
+      name: user
+      field_mapping:
+        userId: id
+actions:
+- definition:
+    kind: synchronous
+    #Use 👇 for async mutation
+    #kind: asynchronous
+    output_type: UserInfo!
+    arguments:
+    - name: name
+      type: String!
+    webhook: http://host.docker.internal:3000/createUser
+    # For linux 👇
+    webhook: http://localhost:3000/createUser
+  name: createUser
+  permissions: []
